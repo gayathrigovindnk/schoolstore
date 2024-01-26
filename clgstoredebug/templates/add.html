@@ -1,0 +1,31 @@
+<form method="POST" enctype="multipart/form-data"  id="studentForm" data-courses-url="{% url 'clgapp:ajax_load_courses' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit">
+
+       <a class="btn btn-primary" href="{% url 'clgapp:logout' %}" role="button">Logout</a>
+     <br>
+       <a class="btn btn-secondary" href="{% url 'clgapp:home' %}">Home</a>
+
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_department").change(function () {
+        const url = $("#studentForm").attr("data-courses-url");
+        const departmentId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'department_id': departmentId
+            },
+            success: function (data) {
+                $("#id_course").html(data);
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
